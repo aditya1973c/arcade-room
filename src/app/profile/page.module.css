@@ -1,0 +1,473 @@
+.profileLayout {
+  display: grid;
+  grid-template-columns: 280px 1fr 300px;
+  gap: 2rem;
+  padding: 2rem 0;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Left Sidebar - Profile Card */
+.leftSidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.profileCard {
+  background: var(--bg-secondary);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+}
+
+.avatarHeader {
+  height: 120px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.avatarWrapper {
+  position: absolute;
+  bottom: -40px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  padding: 4px;
+  background: var(--bg-card);
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatarInitials {
+  font-size: 2rem;
+  font-weight: 600;
+  color: white;
+}
+
+.profileInfo {
+  padding: 3rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.userName {
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.verifiedIcon {
+  flex-shrink: 0;
+}
+
+.userHandle {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.statsGrid {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin-bottom: 1.5rem;
+}
+
+.statBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  line-height: 1.2;
+  margin-top: 0.25rem;
+}
+
+.socialStats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.socialStat {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 1rem;
+  color: var(--text-dim);
+  margin-bottom: 1.5rem;
+}
+
+.editProfileBtn {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.editProfileBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Middle Column - Feed */
+.mainFeed {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.feedTabs {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--bg-secondary);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  padding: 0.5rem;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.feedTab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.feedTabActive {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.feedContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.filterToolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filterPills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filterPill {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  transition: color 0.2s;
+}
+
+.filterPill:hover {
+  color: white;
+}
+
+.filterPillActive {
+  color: white;
+}
+
+.viewToggles {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-secondary);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  padding: 0.25rem;
+  border-radius: 6px;
+}
+
+.viewBtn, .searchBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.viewBtnActive, .viewBtn:hover, .searchBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.reviewsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.reviewsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.reviewsGrid .reviewCard {
+  flex-direction: column;
+}
+
+.reviewsGrid .reviewPoster {
+  width: 100%;
+  height: 140px;
+}
+
+.reviewCard {
+  background: var(--bg-secondary);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.reviewPoster {
+  width: 120px;
+  height: 180px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5rem;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.posterTitle {
+  opacity: 0.5;
+  text-transform: uppercase;
+}
+
+.reviewContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.reviewTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.reviewMeta {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.ratingPill {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: black;
+}
+
+.ratingSkip { background: #ff4d6d; color: white; }
+.ratingTimepass { background: #ffb703; }
+.ratingGoForIt { background: #00e676; }
+.ratingPerfection { background: #a855f7; color: white; }
+
+.reviewText {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #ddd;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.reviewFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reviewActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.actionBtn:hover {
+  color: white;
+}
+
+.moreOptionsBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+
+.moreOptionsBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* Right Sidebar - Interested In */
+.rightSidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.interestedCard {
+  background: transparent;
+}
+
+.interestedTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.interestedList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.interestedItem {
+  display: flex;
+  gap: 1rem;
+  background: var(--bg-secondary);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  padding: 0.75rem;
+  border-radius: 8px;
+  align-items: center;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.interestedItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.interestedPoster {
+  width: 40px;
+  height: 60px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.25rem;
+  font-size: 0.5rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+}
+
+.interestedInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.iTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.iDate {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.iStatus {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
