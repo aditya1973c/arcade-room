@@ -38,8 +38,8 @@ export default function Home() {
     );
   }
 
-  // Calculate top trending game based on likes (votes)
-  const heroGame = [...games].sort((a, b) => (b.likes || 0) - (a.likes || 0))[0];
+  // Calculate top trending games based on interested users
+  const trendingGames = [...games].sort((a, b) => (b.interestedUsers?.length || 0) - (a.interestedUsers?.length || 0)).slice(0, 4);
   
   // Platform specific filters (grabbing up to 4 games per platform)
   const ps5Games = games.filter(g => g.platforms?.some(p => p.toLowerCase().includes('ps5') || p.toLowerCase().includes('playstation'))).slice(0, 4);
@@ -62,7 +62,7 @@ export default function Home() {
           </div>
           <div className={styles.cardInfo}>
             <h3 className={styles.gameTitle}>{game.title}</h3>
-            <p className={styles.gameMeta}>{game.platforms[0]} • {game.releaseDate}</p>
+            <p className={styles.gameMeta}>{game.platforms?.[0] || 'Unknown'} • {game.releaseDate}</p>
           </div>
         </Link>
       ))}
@@ -75,30 +75,15 @@ export default function Home() {
       <div className="main-content">
         
         {/* Trending Section */}
-        {heroGame && (
+        {trendingGames.length > 0 && (
           <section className={styles.section}>
             <div className="section-header">
               <div className="glow-bg"></div>
               <svg className="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
               <h2 className="section-title">This Month's Trending</h2>
             </div>
-          
-          <div className={styles.gameGrid}>
-            <Link href={`/game/${heroGame.id}`} className={`${styles.gameCard} hover-lift`}>
-              <div className={styles.poster}>
-                {heroGame?.posterImage ? (
-                  <div className={styles.placeholderImg} style={{ backgroundImage: `url(${heroGame.posterImage})`, backgroundSize: 'cover', backgroundPosition: 'center', color: 'transparent' }}>Cover Art</div>
-                ) : (
-                  <div className={styles.placeholderImg}>Cover Art</div>
-                )}
-              </div>
-              <div className={styles.cardInfo}>
-                <h3 className={styles.gameTitle}>{heroGame.title}</h3>
-                <p className={styles.gameMeta}>{heroGame.platforms[0]} • {heroGame.releaseDate}</p>
-              </div>
-            </Link>
-          </div>
-        </section>
+            {renderGameRow(trendingGames)}
+          </section>
         )}
 
         {/* New to PS5 Section */}
