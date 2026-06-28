@@ -195,7 +195,7 @@ export default function Home() {
           </div>
 
           <div className={styles.leaderboardList}>
-            {[...games].sort((a, b) => b.likes - a.likes).slice(0, 5).map((game, index) => (
+            {[...games].sort((a, b) => (b.interestedUsers?.length || 0) - (a.interestedUsers?.length || 0)).slice(0, 5).map((game, index) => (
               <Link href={`/game/${game.id}`} key={game.id} className={`${styles.leaderboardItem} hover-lift`} style={{textDecoration: 'none'}}>
                 <div className={styles.rankContainer}>
                   <div className={styles.rankNumber}>{index + 1}</div>
@@ -210,7 +210,7 @@ export default function Home() {
                   <p className={styles.lbMeta}>{game.releaseDate} • {game.status}</p>
                   <div className={styles.lbStat}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={styles.statIcon}><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"></path></svg>
-                    <span>{(game.likes / 1000).toFixed(1)}K Interested</span>
+                    <span>{game.interestedUsers?.length || 0} Interested</span>
                   </div>
                 </div>
               </Link>
