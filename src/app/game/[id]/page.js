@@ -107,7 +107,7 @@ export default function GameDetails() {
   const getStorefronts = (platforms) => {
     if (!platforms || platforms.length === 0) return [];
     const stores = [];
-    const pStr = platforms.join(' ').toLowerCase();
+    const pStr = (Array.isArray(platforms) ? platforms.join(' ') : String(platforms)).toLowerCase();
     const encodedTitle = encodeURIComponent(game.title);
     
     if (pStr.includes('ps4') || pStr.includes('ps5') || pStr.includes('playstation')) {
