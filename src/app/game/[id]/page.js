@@ -241,7 +241,6 @@ export default function GameDetails() {
                 allowFullScreen
               ></iframe>
             </div>
-            </div>
           </div>
         </div>
       )}
