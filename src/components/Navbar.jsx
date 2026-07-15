@@ -12,7 +12,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const { profile, logout, markNotificationsRead } = useProfile();
-  const { games } = useGames();
+  const { games, addGame } = useGames();
   const navRef = useRef(null);
   
   // Navigation states
@@ -34,7 +34,48 @@ export default function Navbar() {
   // Search states
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
   const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    const fetchTimer = setTimeout(async () => {
+      setIsSearching(true);
+      try {
+        const res = await fetch(`/api/igdb/search?q=${encodeURIComponent(searchQuery)}`);
+        if (res.ok) {
+          const data = await res.json();
+          // Filter out games that are already in our local db just in case, or we can just show them
+          // Actually, let's merge local results with IGDB results to prioritize local
+          const localResults = games.filter(g => g.title.toLowerCase().includes(searchQuery.toLowerCase()));
+          const localIds = localResults.map(g => g.id);
+          
+          const igdbResults = data.filter(game => !localIds.includes(game.id));
+          
+          setSearchResults([...localResults, ...igdbResults]);
+        }
+      } catch (err) {
+        console.error("IGDB Search Error:", err);
+      }
+      setIsSearching(false);
+    }, 500); // 500ms debounce
+    
+    return () => clearTimeout(fetchTimer);
+  }, [searchQuery, games]);
+
+  const handleGameClick = async (game) => {
+    // Check if it exists in local context first
+    const exists = games.find(g => g.id === game.id);
+    if (!exists) {
+      await addGame(game);
+    }
+    setSearchOpen(false);
+    router.push(`/game/${game.id}`);
+  };
 
   // Profile menu state
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -95,7 +136,6 @@ export default function Navbar() {
   };
 
   const filteredNotifs = notifs.filter(n => notifTab === 'All' || n.type === notifTab.toLowerCase());
-  const searchResults = searchQuery ? games.filter(g => g.title.toLowerCase().includes(searchQuery.toLowerCase())) : [];
 
   if (pathname === '/login' || pathname === '/signup') return null;
 
@@ -255,15 +295,21 @@ export default function Navbar() {
             
             {searchQuery && (
               <div className={styles.searchResults}>
-                {searchResults.length > 0 ? (
+                {isSearching ? (
+                  <p className={styles.noResults}>Searching IGDB...</p>
+                ) : searchResults.length > 0 ? (
                   searchResults.map(game => (
-                    <Link href={`/game/${game.id}`} key={game.id} className={styles.searchResultItem} onClick={() => setSearchOpen(false)}>
-                      <div className={styles.searchResultImage}></div>
+                    <div key={game.id} className={styles.searchResultItem} onClick={() => handleGameClick(game)}>
+                      {game.posterUrl || game.posterImage ? (
+                        <div className={styles.searchResultImage} style={{ backgroundImage: `url(${game.posterUrl || game.posterImage})` }}></div>
+                      ) : (
+                        <div className={styles.searchResultImage}></div>
+                      )}
                       <div>
                         <h4>{game.title}</h4>
-                        <p>{game.developer} • {game.status}</p>
+                        <p>{game.developer || 'Unknown'} • {game.status || 'Game'}</p>
                       </div>
-                    </Link>
+                    </div>
                   ))
                 ) : (
                   <p className={styles.noResults}>No games found for "{searchQuery}"</p>

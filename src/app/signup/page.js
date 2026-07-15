@@ -12,11 +12,9 @@ export default function SignupPage() {
   
   const [errorMsg, setErrorMsg] = useState('');
 
-  // Form Data
   const [formData, setFormData] = useState({
     username: '',
     email: '',
-    phone: '',
     password: ''
   });
 
@@ -31,7 +29,7 @@ export default function SignupPage() {
     e.preventDefault();
     setErrorMsg('');
 
-    if (!formData.username.trim() || !formData.email.trim() || !formData.phone.trim() || !formData.password.trim()) {
+    if (!formData.username.trim() || !formData.email.trim() || !formData.password.trim()) {
       setErrorMsg('Please fill in all fields.');
       return;
     }
@@ -42,7 +40,7 @@ export default function SignupPage() {
     }
 
     // Success! Create account via Firebase
-    const res = await signup(formData.username, formData.password, formData.email, formData.phone);
+    const res = await signup(formData.username, formData.password, formData.email);
     
     if (res.success) {
       router.push('/');
@@ -93,17 +91,7 @@ export default function SignupPage() {
               />
             </div>
 
-            <div className={styles.inputGroup}>
-              <label className={styles.label}>Phone Number</label>
-              <input 
-                type="tel" 
-                name="phone"
-                className={styles.input} 
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="+1 234 567 8900"
-              />
-            </div>
+
 
             <div className={styles.inputGroup}>
               <label className={styles.label}>Password</label>

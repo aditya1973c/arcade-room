@@ -33,6 +33,24 @@ export function ProfileProvider({ children }) {
   });
 
   useEffect(() => {
+    // Session expiration logic (30 days inactivity)
+    const SESSION_TIMEOUT_DAYS = 30;
+    const lastActive = localStorage.getItem('arcade_last_active');
+    const now = Date.now();
+    
+    if (lastActive) {
+      const daysSinceActive = (now - parseInt(lastActive)) / (1000 * 60 * 60 * 24);
+      if (daysSinceActive > SESSION_TIMEOUT_DAYS) {
+        signOut(auth);
+      }
+    }
+    
+    localStorage.setItem('arcade_last_active', now.toString());
+    
+    const interval = setInterval(() => {
+      localStorage.setItem('arcade_last_active', Date.now().toString());
+    }, 60000); // Update every minute while tab is open
+
     let unsubscribeSnapshot = null;
 
     const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
@@ -79,6 +97,7 @@ export function ProfileProvider({ children }) {
     return () => {
       unsubscribeAuth();
       if (unsubscribeSnapshot) unsubscribeSnapshot();
+      clearInterval(interval);
     };
   }, []);
 

@@ -43,13 +43,21 @@ export default function GameDetails() {
   }
 
   const overview = game.overview || game.description;
-  const tags = game.tags || game.genres;
+  const rawTags = game.tags || game.genres || [];
+  const tags = Array.isArray(rawTags) ? rawTags : (typeof rawTags === 'string' ? rawTags.split(',').map(t => t.trim()) : []);
   const developer = game.developer || "Unknown";
   const publisher = game.publisher || "Unknown";
   const language = game.language || "English";
   const ageRating = game.ageRating || "18+";
-  const showMeta = game.showMeta || `${game.status} • ${game.releaseDate}`;
-  const screenshots = game.screenshots || [];
+  
+  let firstPlatform = "Platform";
+  if (Array.isArray(game.platforms) && game.platforms.length > 0) firstPlatform = game.platforms[0];
+  else if (typeof game.platforms === 'string') firstPlatform = game.platforms.split(',')[0].trim();
+  
+  const showMeta = game.showMeta || `${firstPlatform} • ${game.releaseDate}`;
+  
+  const rawScreenshots = game.screenshots || [];
+  const screenshots = Array.isArray(rawScreenshots) ? rawScreenshots : (typeof rawScreenshots === 'string' ? rawScreenshots.split(',').map(t => t.trim()) : []);
   const dlcs = game.dlcs || game.seasons || [
     { name: `${game.title} - ${game.gameType || "Standard Edition"}`, meta: game.gameType || "Base Game", reviews: `${reviewsList.length} Reviews`, progress: 0, color: "#a855f7" }
   ];
