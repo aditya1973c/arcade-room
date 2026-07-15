@@ -14,17 +14,11 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   
   const [showPassword, setShowPassword] = useState(false);
-  const [captchaVerified, setCaptchaVerified] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMsg('');
-    
-    if (!captchaVerified) {
-      setErrorMsg('Please verify you are human first.');
-      return;
-    }
     
     const res = await login(identifier, password);
     if (res.success) {
@@ -34,12 +28,7 @@ export default function LoginPage() {
     }
   };
 
-  const handleCaptchaClick = () => {
-    if (!captchaVerified) {
-      setCaptchaVerified(true);
-      setErrorMsg('');
-    }
-  };
+
 
   return (
     <div className={styles.loginLayout}>
@@ -91,28 +80,7 @@ export default function LoginPage() {
               </span>
             </div>
 
-            <div 
-              className={`${styles.captchaBox} ${captchaVerified ? styles.captchaVerifiedBox : ''}`}
-              onClick={handleCaptchaClick}
-            >
-              <div className={styles.captchaStatus}>
-                {captchaVerified ? (
-                  <>
-                    <svg className={styles.successIcon} width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                    <span style={{color: '#0f172a'}}>Success!</span>
-                  </>
-                ) : (
-                  <>
-                    <div className={styles.checkboxEmpty}></div>
-                    <span style={{color: '#64748b'}}>Verify you are human</span>
-                  </>
-                )}
-              </div>
-              <div className={styles.cloudflareBrand}>
-                <span className={styles.cfLogo}>CLOUDFLARE</span><br/>
-                Privacy • Terms
-              </div>
-            </div>
+
 
             <button type="submit" className={styles.submitBtn}>
               Login
