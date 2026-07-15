@@ -41,12 +41,23 @@ export default function Home() {
   // Calculate top trending games based on interested users
   const trendingGames = [...games].sort((a, b) => (b.interestedUsers?.length || 0) - (a.interestedUsers?.length || 0)).slice(0, 4);
   
+  const hasPlatform = (game, keyword) => {
+    if (!game.platforms) return false;
+    if (typeof game.platforms === 'string') {
+      return game.platforms.toLowerCase().includes(keyword.toLowerCase());
+    }
+    if (Array.isArray(game.platforms)) {
+      return game.platforms.some(p => p.toLowerCase().includes(keyword.toLowerCase()));
+    }
+    return false;
+  };
+
   // Platform specific filters (grabbing up to 4 games per platform)
-  const ps5Games = games.filter(g => g.platforms?.some(p => p.toLowerCase().includes('ps5') || p.toLowerCase().includes('playstation'))).slice(0, 4);
-  const xboxGames = games.filter(g => g.platforms?.some(p => p.toLowerCase().includes('xbox'))).slice(0, 4);
-  const pcGames = games.filter(g => g.platforms?.some(p => p.toLowerCase().includes('pc'))).slice(0, 4);
-  const androidGames = games.filter(g => g.platforms?.some(p => p.toLowerCase().includes('android') || p.toLowerCase().includes('mobile'))).slice(0, 4);
-  const nintendoGames = games.filter(g => g.platforms?.some(p => p.toLowerCase().includes('nintendo') || p.toLowerCase().includes('switch'))).slice(0, 4);
+  const ps5Games = games.filter(g => hasPlatform(g, 'ps5') || hasPlatform(g, 'playstation')).slice(0, 4);
+  const xboxGames = games.filter(g => hasPlatform(g, 'xbox')).slice(0, 4);
+  const pcGames = games.filter(g => hasPlatform(g, 'pc') || hasPlatform(g, 'windows')).slice(0, 4);
+  const androidGames = games.filter(g => hasPlatform(g, 'android') || hasPlatform(g, 'mobile')).slice(0, 4);
+  const nintendoGames = games.filter(g => hasPlatform(g, 'nintendo') || hasPlatform(g, 'switch')).slice(0, 4);
 
   // Helper function to render a game grid row
   const renderGameRow = (gameList) => (
@@ -62,7 +73,9 @@ export default function Home() {
           </div>
           <div className={styles.cardInfo}>
             <h3 className={styles.gameTitle}>{game.title}</h3>
-            <p className={styles.gameMeta}>{game.platforms?.[0] || 'Unknown'} • {game.releaseDate}</p>
+            <p className={styles.gameMeta}>
+              {Array.isArray(game.platforms) ? (game.platforms[0] || 'Unknown') : (typeof game.platforms === 'string' ? game.platforms.split(',')[0] : 'Unknown')} • {game.releaseDate}
+            </p>
           </div>
         </Link>
       ))}
