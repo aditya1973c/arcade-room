@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from 'react';
-import { collection, doc, setDoc, updateDoc, arrayUnion, increment, onSnapshot, deleteDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, updateDoc, arrayUnion, arrayRemove, increment, onSnapshot, deleteDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 const GameContext = createContext();
@@ -180,15 +180,10 @@ export function GameProvider({ children }) {
       const game = games.find(g => g.id === gameId);
       if (!game) return;
       
-      let newInterested = game.interestedUsers || [];
-      if (newInterested.includes(username)) {
-        newInterested = newInterested.filter(u => u !== username);
-      } else {
-        newInterested.push(username);
-      }
+      const isInterested = (game.interestedUsers || []).includes(username);
       
       await updateDoc(doc(db, "games", gameId), {
-        interestedUsers: newInterested
+        interestedUsers: isInterested ? arrayRemove(username) : arrayUnion(username)
       });
     } catch (error) {
       console.error("Error toggling interested:", error);
@@ -200,15 +195,10 @@ export function GameProvider({ children }) {
       const game = games.find(g => g.id === gameId);
       if (!game) return;
       
-      let newCollection = game.collectionUsers || [];
-      if (newCollection.includes(username)) {
-        newCollection = newCollection.filter(u => u !== username);
-      } else {
-        newCollection.push(username);
-      }
+      const isInCollection = (game.collectionUsers || []).includes(username);
       
       await updateDoc(doc(db, "games", gameId), {
-        collectionUsers: newCollection
+        collectionUsers: isInCollection ? arrayRemove(username) : arrayUnion(username)
       });
     } catch (error) {
       console.error("Error toggling collection:", error);

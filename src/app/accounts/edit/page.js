@@ -271,7 +271,7 @@ export default function AccountSettingsPage() {
                   <label>Current Username</label>
                   <input 
                     type="text" 
-                    value={profile.handle.replace('@', '')} 
+                    value={profile.username || ''} 
                     readOnly
                     className={`${styles.inputField} ${styles.readOnlyInput}`} 
                   />
