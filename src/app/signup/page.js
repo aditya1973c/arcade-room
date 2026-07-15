@@ -34,6 +34,12 @@ export default function SignupPage() {
       return;
     }
 
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      setErrorMsg('Please enter a valid email address (e.g. name@domain.com).');
+      return;
+    }
+
     if (formData.password.length < 6) {
       setErrorMsg('Password must be at least 6 characters.');
       return;
