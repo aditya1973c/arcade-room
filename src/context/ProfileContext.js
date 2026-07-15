@@ -188,6 +188,21 @@ export function ProfileProvider({ children }) {
     }
   };
 
+  const deleteAccount = async () => {
+    if (auth.currentUser) {
+      try {
+        const { deleteDoc, doc } = await import('firebase/firestore');
+        const { deleteUser } = await import('firebase/auth');
+        await deleteDoc(doc(db, "users", auth.currentUser.uid));
+        await deleteUser(auth.currentUser);
+        return { success: true };
+      } catch (error) {
+        return { success: false, error: error.message };
+      }
+    }
+    return { success: false, error: 'Not logged in' };
+  };
+
   const resetPassword = async (email) => {
     try {
       await sendPasswordResetEmail(auth, email);
@@ -248,6 +263,7 @@ export function ProfileProvider({ children }) {
       login, 
       signup, 
       logout, 
+      deleteAccount,
       resetPassword,
       setupRecaptcha,
       sendOTP,

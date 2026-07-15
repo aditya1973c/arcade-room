@@ -8,11 +8,12 @@ import styles from './page.module.css';
 
 export default function AccountSettingsPage() {
   const router = useRouter();
-  const { profile, updateProfile } = useProfile();
+  const { profile, updateProfile, deleteAccount } = useProfile();
   
   const [activeTab, setActiveTab] = useState('editProfile'); // 'editProfile', 'changeUsername', 'deleteAccount'
   const [deleteChecked, setDeleteChecked] = useState(false);
-  
+  const [deleteError, setDeleteError] = useState('');
+
   const [usernameStep, setUsernameStep] = useState(1);
   const [newHandle, setNewHandle] = useState('');
   const [usernameSaved, setUsernameSaved] = useState(false);
@@ -55,8 +56,20 @@ export default function AccountSettingsPage() {
     setUsernameSaved(true);
   };
 
-  const handleDeleteAccount = () => {
-    router.push('/');
+  const handleDeleteAccount = async () => {
+    setDeleteError('');
+    if (!deleteChecked) return;
+    const res = await deleteAccount();
+    if (res.success) {
+      router.push('/');
+    } else {
+      // Firebase requires recent login for account deletion
+      if (res.error.includes('requires-recent-login')) {
+        setDeleteError('Please log out and log back in to verify your identity before deleting your account.');
+      } else {
+        setDeleteError(res.error);
+      }
+    }
   };
 
   const handleFileChange = (e) => {
@@ -353,6 +366,11 @@ export default function AccountSettingsPage() {
               >
                 Proceed to Delete
               </button>
+              {deleteError && (
+                <div style={{ color: '#ef4444', marginTop: '1rem', fontSize: '0.9rem' }}>
+                  {deleteError}
+                </div>
+              )}
             </div>
           </div>
         )}
