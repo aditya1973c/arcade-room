@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+export const dynamic = 'force-dynamic';
 
 let cachedToken = null;
 let tokenExpiresAt = 0;
@@ -42,7 +43,6 @@ export async function GET(request) {
     const igdbQuery = `
       search "${query.replace(/"/g, '\\"')}";
       fields name, summary, first_release_date, cover.url, artworks.url, genres.name, platforms.name, involved_companies.company.name, screenshots.url, videos.video_id;
-      where category = (0, 8, 9); 
       limit 10;
     `;
 
