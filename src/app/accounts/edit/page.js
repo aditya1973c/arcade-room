@@ -46,12 +46,12 @@ export default function AccountSettingsPage() {
   }, [usernameSaved]);
 
   const handleProceedUsername = () => {
-    setNewHandle(profile.handle.replace('@', ''));
+    setNewHandle(profile.username || '');
     setUsernameStep(2);
   };
 
   const handleSaveUsername = () => {
-    updateProfile({ handle: `@${newHandle}` });
+    updateProfile({ username: newHandle });
     setUsernameStep(1);
     setUsernameSaved(true);
   };
@@ -84,9 +84,14 @@ export default function AccountSettingsPage() {
   };
 
   const handleSave = () => {
+    const fullName = `${firstName} ${lastName}`.trim();
+    const initials = (firstName.charAt(0) + (lastName ? lastName.charAt(0) : '')).toUpperCase();
+    
     updateProfile({
       firstName,
       lastName,
+      name: fullName,
+      initials,
       dob,
       bio,
       instagram,

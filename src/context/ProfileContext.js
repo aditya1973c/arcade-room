@@ -167,6 +167,8 @@ export function ProfileProvider({ children }) {
       const newUser = {
         username,
         email,
+        name: username, // default name to username
+        initials: username.substring(0, 2).toUpperCase(), // default initials
         isAdmin: isAdminUser,
         createdAt: new Date().toISOString()
       };
