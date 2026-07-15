@@ -156,7 +156,7 @@ export function ProfileProvider({ children }) {
     }
   };
 
-  const signup = async (username, password, email, phone) => {
+  const signup = async (username, password, email) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -167,7 +167,6 @@ export function ProfileProvider({ children }) {
       const newUser = {
         username,
         email,
-        phone,
         isAdmin: isAdminUser,
         createdAt: new Date().toISOString()
       };
