@@ -241,22 +241,6 @@ export default function GameDetails() {
                 allowFullScreen
               ></iframe>
             </div>
-            
-            <div className={styles.videoTabs}>
-              {['Announcement', 'Teaser', 'Trailer'].map(tab => (
-                <button 
-                  key={tab}
-                  className={`${styles.videoTab} ${activeVideoTab === tab ? styles.videoTabActive : ''}`} 
-                  onClick={() => setActiveVideoTab(tab)}
-                >
-                  {activeVideoTab === tab && (
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
-                  )}
-                  {tab}
-                </button>
-              ))}
             </div>
           </div>
         </div>
