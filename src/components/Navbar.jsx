@@ -311,7 +311,7 @@ export default function Navbar() {
             {searchQuery && (
               <div className={styles.searchResults}>
                 {isSearching ? (
-                  <div className={styles.searchingSpacer}></div>
+                  <p className={styles.noResults}>Searching...</p>
                 ) : searchError ? (
                   <div className={styles.emptySearch}>
                     Error: {searchError}
