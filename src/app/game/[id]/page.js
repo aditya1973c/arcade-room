@@ -265,7 +265,7 @@ export default function GameDetails() {
       {/* Hero Banner */}
       <section 
         className={styles.hero} 
-        style={game.heroImage ? { backgroundImage: `url(${game.heroImage})` } : {}}
+        style={game.heroUrl || game.heroImage ? { backgroundImage: `url(${game.heroUrl || game.heroImage})` } : {}}
       >
         <div className={styles.heroGradient}></div>
         {game.trailerUrl && (
@@ -281,8 +281,8 @@ export default function GameDetails() {
         {/* Header Metadata Block */}
         <div className={styles.headerBlock}>
           <div className={styles.posterContainer}>
-            <div className={styles.poster} style={game.posterImage ? { backgroundImage: `url(${game.posterImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}>
-              {!game.posterImage && <div className={styles.posterTag}>{game.title}</div>}
+            <div className={styles.poster} style={game.posterUrl || game.posterImage ? { backgroundImage: `url(${game.posterUrl || game.posterImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}>
+              {!(game.posterUrl || game.posterImage) && <div className={styles.posterTag}>{game.title}</div>}
             </div>
           </div>
           

@@ -65,8 +65,8 @@ export default function Home() {
       {gameList.map((game) => (
         <Link href={`/game/${game.id}`} key={game.id} className={`${styles.gameCard} hover-lift`}>
           <div className={styles.poster}>
-            {game?.posterImage ? (
-              <div className={styles.placeholderImg} style={{ backgroundImage: `url(${game.posterImage})`, backgroundSize: 'cover', backgroundPosition: 'center', color: 'transparent' }}>Cover Art</div>
+            {game?.posterUrl || game?.posterImage ? (
+              <div className={styles.placeholderImg} style={{ backgroundImage: `url(${game.posterUrl || game.posterImage})`, backgroundSize: 'cover', backgroundPosition: 'center', color: 'transparent' }}>Cover Art</div>
             ) : (
               <div className={styles.placeholderImg} style={{ background: 'var(--bg-tertiary)' }}>Cover Art</div>
             )}
@@ -197,8 +197,8 @@ export default function Home() {
               <Link href={`/game/${game.id}`} key={game.id} className={`${styles.leaderboardItem} hover-lift`} style={{textDecoration: 'none'}}>
                 <div className={styles.rankContainer}>
                   <div className={styles.rankNumber}>{index + 1}</div>
-                  {game?.posterImage ? (
-                    <div className={styles.lbThumbnail} style={{ backgroundImage: `url(${game.posterImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+                  {game?.posterUrl || game?.posterImage ? (
+                    <div className={styles.lbThumbnail} style={{ backgroundImage: `url(${game.posterUrl || game.posterImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
                   ) : (
                     <div className={styles.lbThumbnail}></div>
                   )}
