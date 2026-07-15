@@ -36,6 +36,7 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState(null);
   const searchInputRef = useRef(null);
 
   useEffect(() => {
@@ -57,9 +58,16 @@ export default function Navbar() {
           const igdbResults = data.filter(game => !localIds.includes(game.id));
           
           setSearchResults([...localResults, ...igdbResults]);
+          setSearchError(null);
+        } else {
+          const errData = await res.json();
+          setSearchError(errData.error || 'Server error');
+          setSearchResults([]);
         }
       } catch (err) {
         console.error("IGDB Search Error:", err);
+        setSearchError('Network error');
+        setSearchResults([]);
       }
       setIsSearching(false);
     }, 500); // 500ms debounce
@@ -297,6 +305,10 @@ export default function Navbar() {
               <div className={styles.searchResults}>
                 {isSearching ? (
                   <p className={styles.noResults}>Searching IGDB...</p>
+                ) : searchError ? (
+                  <div className={styles.emptySearch}>
+                    Error: {searchError}
+                  </div>
                 ) : searchResults.length > 0 ? (
                   searchResults.map(game => (
                     <div key={game.id} className={styles.searchResultItem} onClick={() => handleGameClick(game)}>
