@@ -187,6 +187,7 @@ export function GameProvider({ children }) {
       });
     } catch (error) {
       console.error("Error toggling interested:", error);
+      alert("Database error: " + error.message);
     }
   };
 
@@ -202,6 +203,7 @@ export function GameProvider({ children }) {
       });
     } catch (error) {
       console.error("Error toggling collection:", error);
+      alert("Database error: " + error.message);
     }
   };
 
