@@ -144,6 +144,22 @@ export default function Navbar() {
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (notifOpen && !e.target.closest(`.${styles.dropdownContainer}`)) {
+        setNotifOpen(false);
+      }
+      if (profileMenuOpen && !e.target.closest(`.${styles.profileDropdownContainer}`)) {
+        setProfileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [notifOpen, profileMenuOpen]);
+
   const markAllRead = () => {
     markNotificationsRead();
     // Optimistic UI update
