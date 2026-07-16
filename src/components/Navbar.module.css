@@ -2,9 +2,9 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: rgba(15, 15, 15, 0.85); /* Darker, less transparent background */
-  backdrop-filter: blur(24px); /* Stronger blur effect */
-  -webkit-backdrop-filter: blur(24px);
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--glass-border);
 }
 
