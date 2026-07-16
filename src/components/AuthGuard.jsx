@@ -34,7 +34,7 @@ export default function AuthGuard({ children }) {
   }
   if (!mounted) return null;
   
-  if (!isLoggedIn && pathname !== '/login' && pathname !== '/signup') {
+  if (!isLoggedIn && pathname !== '/login' && pathname !== '/signup' && pathname !== '/forgot-password') {
     return (
       <div style={{ height: '100vh', width: '100vw', backgroundColor: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {/* Simple loading state while redirecting */}
