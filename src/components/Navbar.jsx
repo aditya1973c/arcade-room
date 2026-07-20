@@ -172,6 +172,7 @@ export default function Navbar() {
 
   return (
     <>
+      <div style={{ height: '65px', flexShrink: 0, width: '100%' }}></div>
       <header className={styles.header}>
         <div className={`container ${styles.navContainer}`}>
           <Link href="/" className={styles.logo}>
