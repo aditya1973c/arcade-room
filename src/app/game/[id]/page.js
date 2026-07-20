@@ -455,10 +455,14 @@ export default function GameDetails() {
                               const x2 = cx + radius * Math.cos(endAngle);
                               const y2 = cy + radius * Math.sin(endAngle);
                               
+                              const isHovered = hoveredMeter && hoveredMeter.name === seg.name;
+                              const currentStrokeWidth = isHovered ? strokeWidth + 4 : strokeWidth;
+                              
                               const hoverStyle = {
-                                opacity: hoveredMeter && hoveredMeter.name !== seg.name ? 0.3 : 1,
+                                opacity: hoveredMeter && !isHovered ? 0.3 : 1,
                                 cursor: 'pointer',
-                                transition: 'opacity 0.2s ease, stroke-width 0.2s ease'
+                                transition: 'opacity 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease',
+                                filter: isHovered ? `drop-shadow(0px 0px 6px ${seg.color})` : 'none'
                               };
                               
                               if (dashLength < 0.1) {
@@ -470,7 +474,7 @@ export default function GameDetails() {
                                     key={seg.name}
                                     cx={midX}
                                     cy={midY}
-                                    r={strokeWidth / 2}
+                                    r={currentStrokeWidth / 2}
                                     fill={seg.color}
                                     onMouseEnter={() => setHoveredMeter(seg)}
                                     onMouseLeave={() => setHoveredMeter(null)}
@@ -487,7 +491,7 @@ export default function GameDetails() {
                                   d={d}
                                   fill="none"
                                   stroke={seg.color}
-                                  strokeWidth={strokeWidth}
+                                  strokeWidth={currentStrokeWidth}
                                   strokeLinecap="round"
                                   onMouseEnter={() => setHoveredMeter(seg)}
                                   onMouseLeave={() => setHoveredMeter(null)}
@@ -709,6 +713,9 @@ export default function GameDetails() {
                             const dashoffset = -currentPos;
                             currentPos += length + gapSize;
                             
+                            const isHovered = hoveredVibe && hoveredVibe.label === seg.label;
+                            const currentStrokeWidth = isHovered ? strokeWidth + 6 : strokeWidth;
+                            
                             return (
                               <circle 
                                 key={seg.label}
@@ -717,7 +724,7 @@ export default function GameDetails() {
                                 r={radius}
                                 fill="none"
                                 stroke={seg.color}
-                                strokeWidth={strokeWidth}
+                                strokeWidth={currentStrokeWidth}
                                 strokeLinecap="butt"
                                 strokeDasharray={dasharray}
                                 strokeDashoffset={dashoffset}
@@ -725,9 +732,10 @@ export default function GameDetails() {
                                 onMouseEnter={() => setHoveredVibe(seg)}
                                 onMouseLeave={() => setHoveredVibe(null)}
                                 style={{
-                                  opacity: hoveredVibe && hoveredVibe.label !== seg.label ? 0.3 : 1,
+                                  opacity: hoveredVibe && !isHovered ? 0.3 : 1,
                                   cursor: 'pointer',
-                                  transition: 'opacity 0.2s ease, stroke-width 0.2s ease'
+                                  transition: 'all 0.2s ease',
+                                  filter: isHovered ? `drop-shadow(0px 0px 8px ${seg.color})` : 'none'
                                 }}
                               />
                             );
