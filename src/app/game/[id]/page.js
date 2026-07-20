@@ -700,10 +700,11 @@ export default function GameDetails() {
                           const totalGaps = numGaps * gapSize;
                           const availableL = C - totalGaps;
                           
+                          const totalScore = activeSegments.reduce((sum, s) => sum + s.value, 0);
                           let currentPos = 0;
                           
                           return activeSegments.map(seg => {
-                            const length = (seg.value / 100) * availableL;
+                            const length = (seg.value / totalScore) * availableL;
                             const dasharray = `${length} ${C - length}`;
                             const dashoffset = -currentPos;
                             currentPos += length + gapSize;
