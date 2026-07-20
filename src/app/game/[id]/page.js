@@ -461,8 +461,7 @@ export default function GameDetails() {
                               const hoverStyle = {
                                 opacity: hoveredMeter && !isHovered ? 0.3 : 1,
                                 cursor: 'pointer',
-                                transition: 'opacity 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease',
-                                filter: isHovered ? `drop-shadow(0px 0px 6px ${seg.color})` : 'none'
+                                transition: 'opacity 0.2s ease, stroke-width 0.2s ease'
                               };
                               
                               if (dashLength < 0.1) {
@@ -734,8 +733,7 @@ export default function GameDetails() {
                                 style={{
                                   opacity: hoveredVibe && !isHovered ? 0.3 : 1,
                                   cursor: 'pointer',
-                                  transition: 'all 0.2s ease',
-                                  filter: isHovered ? `drop-shadow(0px 0px 8px ${seg.color})` : 'none'
+                                  transition: 'all 0.2s ease'
                                 }}
                               />
                             );
